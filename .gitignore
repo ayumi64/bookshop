@@ -1,0 +1,27 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# next
+.next
+out
+build
+
+# env — 只提交 .env.example
+.env
+.env*.local
+.env.local
+
+# supabase local state
+supabase/.temp
+supabase/.branches
+
+# vercel
+.vercel
+
+# debug / os
+npm-debug.log*
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts

@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%; /* #FAFAFA */
+    --foreground: 0 4% 10%; /* #1A1A1A */
+    --card: 0 0% 100%;
+    --card-foreground: 0 4% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 4% 10%;
+    --primary: 221 83% 53%; /* #2563EB */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 92%;
+    --secondary-foreground: 0 4% 10%;
+    --muted: 0 0% 93%;
+    --muted-foreground: 0 0% 36%; /* #5C5C5C >=4.5:1 */
+    --accent: 221 83% 96%;
+    --accent-foreground: 221 83% 33%;
+    --destructive: 0 72% 51%; /* #DC2626 */
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 36%; /* #16A34A */
+    --success-foreground: 0 0% 100%;
+    --border: 0 0% 90%; /* #E5E5E5 */
+    --input: 0 0% 86%;
+    --ring: 221 83% 53%;
+    --radius: 0.5rem;
+    /* Reader light theme */
+    --reader-bg: 0 0% 98%;
+    --reader-fg: 0 4% 10%;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 92%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 92%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 92%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 92%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 217 91% 20%;
+    --accent-foreground: 217 91% 80%;
+    --destructive: 0 72% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 24%;
+    --ring: 217 91% 60%;
+    --radius: 0.5rem;
+    /* Reader dark (night) theme */
+    --reader-bg: 222 20% 8%;
+    --reader-fg: 40 20% 88%;
+  }
+
+  .reader-sepia {
+    /* 护眼 / 仿纸质 (class-based, applied on reader wrapper) */
+    --reader-bg: 40 30% 94%;
+    --reader-fg: 25 30% 18%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  /* Visible focus (WCAG 2.1 AA focus visibility, never clipped) */
+  .focus-visible-ring:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
