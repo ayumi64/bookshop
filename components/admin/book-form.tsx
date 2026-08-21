@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useActionState } from 'react';
+import { useFormState } from 'react-dom';
 import type { AdminFormState } from '@/app/admin/actions';
-import { Button } from '@/components/ui/button';
+import { SubmitButton } from '@/components/forms/submit-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -19,7 +19,7 @@ import {
 /**
  * Admin book form (上架 / 编辑) — reused by /admin/books/new and
  * /admin/books/[id]/edit. Submits to a Server Action (createBook or updateBook)
- * via useActionState so errors are shown inline. Covers can be uploaded as a
+ * via useFormState so errors are shown inline. Covers can be uploaded as a
  * file; the action pushes it to the `covers` storage bucket.
  */
 
@@ -49,7 +49,7 @@ export function BookForm({
   initial?: Partial<BookFormValues>;
   submitLabel: string;
 }) {
-  const [state, formAction, pending] = useActionState(action, {});
+  const [state, formAction] = useFormState(action, {});
   const [coverUrl, setCoverUrl] = useState(initial?.cover_url ?? '');
   const [bodyLocation, setBodyLocation] = useState(initial?.body_location ?? '');
   const [uploading, setUploading] = useState(false);
@@ -216,10 +216,7 @@ export function BookForm({
         </p>
       </div>
 
-      <Button type="submit" disabled={pending} className="w-full md:w-auto">
-        {pending && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
-        {submitLabel}
-      </Button>
+      <SubmitButton className="w-full md:w-auto">{submitLabel}</SubmitButton>
     </form>
   );
 }

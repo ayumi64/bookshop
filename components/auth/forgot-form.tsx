@@ -1,18 +1,18 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useFormState } from 'react-dom';
 import type { FormState } from '@/app/(auth)/actions';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Loader2, MailCheck } from 'lucide-react';
+import { SubmitButton } from '@/components/forms/submit-button';
+import { MailCheck } from 'lucide-react';
 
 export function ForgotForm({
   action,
 }: {
   action: (prev: FormState, formData: FormData) => Promise<FormState>;
 }) {
-  const [state, formAction, pending] = useActionState(action, {});
+  const [state, formAction] = useFormState(action, {});
 
   if (state.ok) {
     return (
@@ -35,10 +35,7 @@ export function ForgotForm({
         <Label htmlFor="email">邮箱</Label>
         <Input id="email" name="email" type="email" autoComplete="email" required />
       </div>
-      <Button type="submit" className="w-full" disabled={pending}>
-        {pending && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
-        发送重置邮件
-      </Button>
+      <SubmitButton className="w-full">发送重置邮件</SubmitButton>
     </form>
   );
 }

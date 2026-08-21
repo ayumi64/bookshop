@@ -34,7 +34,7 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
     password,
     options: {
       data: { display_name: displayName || email.split('@')[0] },
-      emailRedirectTo: `${SITE.url}/api/auth/callback?next=${encodeURIComponent(next)}`,
+      emailRedirectTo: `${SITE.url}/auth/callback?next=${encodeURIComponent(next)}`,
     },
   });
   if (error) return { ok: false, error: humanizeAuthError(error.message) };

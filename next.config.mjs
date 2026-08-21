@@ -6,6 +6,16 @@ const nextConfig = {
       { protocol: 'https', hostname: '**' },
     ],
   },
+  async redirects() {
+    return [
+      // Old sign-up emails used /api/auth/callback; the route lives at /auth/callback.
+      {
+        source: '/api/auth/callback',
+        destination: '/auth/callback',
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {

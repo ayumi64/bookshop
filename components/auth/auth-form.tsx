@@ -1,14 +1,13 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useFormState } from 'react-dom';
 import type { FormState } from '@/app/(auth)/actions';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { SubmitButton } from '@/components/forms/submit-button';
 
 /**
- * Thin wrapper around useActionState for our auth Server Actions so errors are
+ * Thin wrapper around useFormState for our auth Server Actions so errors are
  * shown inline and the submit button shows a loading state (AC-A5).
  */
 export function AuthForm({
@@ -29,7 +28,7 @@ export function AuthForm({
     required?: boolean;
   }>;
 }) {
-  const [state, formAction, pending] = useActionState(action, {});
+  const [state, formAction] = useFormState(action, {});
 
   return (
     <form action={formAction} className="space-y-4">
@@ -52,10 +51,7 @@ export function AuthForm({
           />
         </div>
       ))}
-      <Button type="submit" className="w-full" disabled={pending}>
-        {pending && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
-        {submitLabel}
-      </Button>
+      <SubmitButton className="w-full">{submitLabel}</SubmitButton>
     </form>
   );
 }

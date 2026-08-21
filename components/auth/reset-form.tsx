@@ -1,20 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useFormState } from 'react-dom';
 import { createClient } from '@/lib/supabase/browser';
 import { resetPasswordAction } from '@/app/(auth)/actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { useActionState } from 'react';
+import { SubmitButton } from '@/components/forms/submit-button';
 import { Loader2, AlertTriangle } from 'lucide-react';
 
 type Status = { kind: 'checking' } | { kind: 'ok' } | { kind: 'error'; text: string };
 
 export function ResetPasswordClient() {
   const [status, setStatus] = useState<Status>({ kind: 'checking' });
-  const [state, formAction, pending] = useActionState(resetPasswordAction, {});
+  const [state, formAction] = useFormState(resetPasswordAction, {});
 
   useEffect(() => {
     const supabase = createClient();
@@ -100,10 +100,7 @@ export function ResetPasswordClient() {
             <Label htmlFor="confirm">确认新密码</Label>
             <Input id="confirm" name="confirm" type="password" autoComplete="new-password" minLength={8} required />
           </div>
-          <Button type="submit" className="w-full" disabled={pending}>
-            {pending && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
-            保存新密码
-          </Button>
+          <SubmitButton className="w-full">保存新密码</SubmitButton>
         </form>
       </CardContent>
     </Card>

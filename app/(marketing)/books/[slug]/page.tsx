@@ -3,12 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPublicBookBySlug, listChapters, getMyPurchase, withContentAccess } from '@/lib/data';
+import { getReviewsBundle } from '@/lib/reviews';
 import { getCurrentUser } from '@/lib/auth';
 import { formatPrice } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BookOpenText, Lock, Check, ChevronLeft } from 'lucide-react';
 import { PurchaseButton } from '@/components/books/purchase-button';
+import { BookReviews } from '@/components/reviews/book-reviews';
 
 export const metadata: Metadata = { title: '书籍详情' };
 
@@ -39,6 +41,9 @@ export default async function BookDetailPage({
   const total = chapters.length;
   // Trial chapters are the ones with content available to the anon viewer.
   const trialCount = accessChapters.filter((c) => c.content !== null).length;
+
+  // Phase 2 — Ratings & Reviews bundle (read via aggregate table; SSR-safe).
+  const reviewsBundle = await getReviewsBundle(book.id, user?.id, 5);
 
   const price = formatPrice(book.price_cents, book.currency);
 
@@ -86,6 +91,17 @@ export default async function BookDetailPage({
               <p className="mt-2 whitespace-pre-line text-muted-foreground">{book.blurb}</p>
             </details>
           )}
+
+          {/* Phase 2 — 评分与评论：置于购买 CTA 上方（决策在前、付费在后，design §0/§3.1） */}
+          <BookReviews
+            book={{ id: book.id, slug: book.slug, title: book.title }}
+            stats={reviewsBundle.stats}
+            reviews={reviewsBundle.reviews}
+            total={reviewsBundle.total}
+            mine={reviewsBundle.mine}
+            isLoggedIn={isLoggedIn}
+            viewerPurchased={reviewsBundle.viewerPurchased}
+          />
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {purchased ? (

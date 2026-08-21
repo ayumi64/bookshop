@@ -1,0 +1,39 @@
+# Auth URL allow-list for Vercel staging + local.
+# Pushed with: supabase config push --project-ref pxksjlandbfeyvxvasms
+project_id = "pxksjlandbfeyvxvasms"
+
+[auth]
+enabled = true
+site_url = "https://bookshop-pearl-seven.vercel.app"
+additional_redirect_urls = [
+  "https://bookshop-pearl-seven.vercel.app",
+  "https://bookshop-pearl-seven.vercel.app/**",
+  "https://bookshop-pearl-seven.vercel.app/auth/callback",
+  "https://bookshop-pearl-seven.vercel.app/api/auth/callback",
+  "https://bookshop-pearl-seven.vercel.app/reset-password",
+  "https://bookshop-sonic18.vercel.app",
+  "https://bookshop-sonic18.vercel.app/**",
+  "https://bookshop-sonic18.vercel.app/auth/callback",
+  "https://bookshop-sonic18.vercel.app/api/auth/callback",
+  "https://bookshop-sonic18.vercel.app/reset-password",
+  "http://localhost:3000",
+  "http://localhost:3000/**",
+  "http://localhost:3000/auth/callback",
+  "http://localhost:3000/api/auth/callback",
+  "http://localhost:3000/reset-password",
+]
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+max_frequency = "1m0s"
+otp_length = 8
+otp_expiry = 3600
+
+[auth.mfa]
+max_enrolled_factors = 10
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
